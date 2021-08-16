@@ -11,7 +11,7 @@ repositories {
 }
 
 group = 'com.github.mastergyp'
-version = '0.9.0'
+version = '0.9.1'
 
 android {
     compileSdkVersion 30
@@ -25,12 +25,6 @@ android {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
-        }
-    }
-
-    sourceSets {
-        main {
-            jniLibs.srcDirs = ['libs']
         }
     }
 
@@ -48,14 +42,10 @@ android {
             outputFileName = "citcon-alipay-${variant.name}-${version}.aar"
         }
     }
-
-//    flatDir {
-//        dirs 'libs' //this way we can find the .aar file in libs folder
-//    }
 }
 
 dependencies {
-    api (name: 'alipaysdk-15.8.03.210428205839', ext: 'aar')
+    api files('libs/alipaysdk-15.8.03.210428205839.jar')
 }
 
 afterEvaluate {
@@ -66,7 +56,7 @@ afterEvaluate {
                 from components.release
                 groupId = "com.github.mastergyp"
                 artifactId = 'citcon-alipay'
-                version = "0.9.0"
+                version = "0.9.1"
             }
         }
     }
