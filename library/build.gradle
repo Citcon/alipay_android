@@ -1,0 +1,73 @@
+plugins {
+    id 'com.android.library'
+    id 'kotlin-android'
+    id 'maven-publish'
+}
+
+repositories {
+    mavenCentral()
+    google()
+    maven { url "https://jitpack.io" }
+}
+
+group = 'com.github.mastergyp'
+version = '0.9.0'
+
+android {
+    compileSdkVersion 30
+
+    defaultConfig {
+        minSdkVersion 16
+        targetSdkVersion 30
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    sourceSets {
+        main {
+            jniLibs.srcDirs = ['libs']
+        }
+    }
+
+    compileOptions {
+        sourceCompatibility = JavaVersion.VERSION_11
+        targetCompatibility = JavaVersion.VERSION_11
+    }
+    kotlinOptions {
+        jvmTarget = '11'
+        useIR = true
+    }
+
+    libraryVariants.all { variant ->
+        variant.outputs.all {
+            outputFileName = "citcon-alipay-${variant.name}-${version}.aar"
+        }
+    }
+
+//    flatDir {
+//        dirs 'libs' //this way we can find the .aar file in libs folder
+//    }
+}
+
+dependencies {
+    api (name: 'alipaysdk-15.8.03.210428205839', ext: 'aar')
+}
+
+afterEvaluate {
+    publishing {
+        publications {
+            // Creates a Maven publication called "release".
+            release(MavenPublication) {
+                from components.release
+                groupId = "com.github.mastergyp"
+                artifactId = 'citcon-alipay'
+                version = "0.9.0"
+            }
+        }
+    }
+}
