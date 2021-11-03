@@ -14,11 +14,11 @@ group = 'com.github.mastergyp'
 version = '0.9.1'
 
 android {
-    compileSdkVersion 30
+    compileSdkVersion 31
 
     defaultConfig {
         minSdkVersion 16
-        targetSdkVersion 30
+        targetSdkVersion 31
     }
 
     buildTypes {
@@ -36,6 +36,7 @@ android {
         jvmTarget = '11'
         useIR = true
     }
+    buildToolsVersion '31.0.0'
 
     libraryVariants.all { variant ->
         variant.outputs.all {
@@ -61,3 +62,11 @@ afterEvaluate {
         }
     }
 }
+
+ext {
+    PUBLISH_GROUP_ID = 'com.citcon.sdk'
+    PUBLISH_VERSION = '15.8.03'
+    PUBLISH_ARTIFACT_ID = 'alipay'
+}
+
+apply from: "${rootProject.projectDir}/scripts/publish-module.gradle"
